@@ -15,7 +15,13 @@ func TestParser(t *testing.T) {
 		input:   "name = 'cloud'",
 		wantErr: "",
 	}, {
-		input: `on_poweroff = 'destroy'; on_crash    = "preserve"`,
+		input:   "name = \"cloud'",
+		wantErr: "syntax error",
+	}, {
+		input:   `on_poweroff = 'destroy'; on_crash    = "preserve"`,
+		wantErr: "",
+	}, {
+		input:   `vif = []`,
 		wantErr: "",
 	}}
 	for _, tc := range testcases {

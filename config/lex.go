@@ -18,10 +18,11 @@ func Parse(input []byte) (map[string]interface{}, error) {
 }
 
 type lex struct {
-	input  []byte
-	pos    int
-	result map[string]interface{}
-	err    error
+	input        []byte
+	pos          int
+	result       map[string]interface{}
+	err          error
+	stringCloser byte
 }
 
 func newLex(input []byte) *lex {
@@ -41,6 +42,7 @@ func (l *lex) scanNormal(lval *yySymType) int {
 		case unicode.IsSpace(rune(b)):
 			continue
 		case b == '"' || b == '\'':
+			l.stringCloser = b
 			return l.scanString(lval)
 		case unicode.IsDigit(rune(b)) || b == '+' || b == '-':
 			l.backup()
@@ -76,7 +78,7 @@ func (l *lex) scanString(lval *yySymType) int {
 				return LexError
 			}
 			buf.WriteByte(b2)
-		case b == '"' || b == '\'':
+		case b == l.stringCloser:
 			lval.val = buf.String()
 			return String
 		default:
