@@ -67,7 +67,12 @@ config_value:
   array
 | value
 
-array: '[' elements ']'
+array:
+  '[' elements ']'
+  {
+    $$ = $2
+  }
+| '[' elements ',' ']'
   {
     $$ = $2
   }

@@ -23,6 +23,12 @@ func TestParser(t *testing.T) {
 	}, {
 		input:   `vif = []`,
 		wantErr: "",
+	}, {
+		input:   `vif = ["some-string",'another string']`,
+		wantErr: "",
+	}, {
+		input:   `vif = ["some-string",]`,
+		wantErr: "",
 	}}
 	for _, tc := range testcases {
 		_, err := Parse([]byte(tc.input))
