@@ -112,7 +112,7 @@ func (l *lex) scanLiteral(lval *yySymType) int {
 	for {
 		b := l.next()
 		switch {
-		case unicode.IsLetter(rune(b)):
+		case unicode.IsLetter(rune(b)) || b == '_':
 			buf.WriteByte(b)
 		default:
 			l.backup()

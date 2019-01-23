@@ -14,6 +14,9 @@ func TestParser(t *testing.T) {
 	}, {
 		input:   "name = 'cloud'",
 		wantErr: "",
+	}, {
+		input: `on_poweroff = 'destroy'; on_crash    = "preserve"`,
+		wantErr: "",
 	}}
 	for _, tc := range testcases {
 		_, err := Parse([]byte(tc.input))
